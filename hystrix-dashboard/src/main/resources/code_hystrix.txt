@@ -1,0 +1,36 @@
+1
+@HystrixCommand(
+	commandProperties= {
+		@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="10")
+	}
+)
+
+2
+@HystrixCommand(
+	commandProperties= {
+		@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="10"),
+		@HystrixProperty(name="circuitBreaker.errorThresholdPercentage", value="10"),
+		@HystrixProperty(name="circuitBreaker.requestVolumeThreshold", value="5")
+	}
+)
+
+3
+http://localhost:9010/hystrix
+http://localhost:8080/actuator/hystrix.stream
+
+4
+server:
+  port: 9030
+
+spring:
+  application:
+    name: turbine
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+turbine:
+  cluster-name-expression: new String('default')
+  app-config: baseservice, socialservice

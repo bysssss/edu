@@ -1,0 +1,50 @@
+3-1
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+
+
+3-2
+List<ServiceInstance> instances = discoveryClient.getInstances("socialservice");
+		
+logger.info(instances.get(0).getUri().toString());
+
+FeedResponseDto response = restTemplate
+		.getForEntity(instances.get(0).getUri().toString() + "/feed?userId={userId}", FeedResponseDto.class, userId).getBody();
+		
+		
+3-3
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-openfeign</artifactId>
+</dependency>
+
+
+3-4
+@FeignClient("baseservice")
+public interface BaseServiceFeignClient {
+	@RequestMapping(
+			method=RequestMethod.GET,
+			value="/auth",
+			consumes="application/json")
+	ResponseDto<AuthTokenData> getAuthToken(@RequestParam(value="token") String token);
+}
+
+
+3-5
+@Autowired
+BaseServiceFeignClient baseServiceFeignClient;
+
+@PostMapping("/follow")
+public ResultDto addFollow(@RequestBody FollowDto dto, @RequestHeader(value="accesstoken") String accesstoken) {
+	ResponseDto<AuthTokenData> result = baseServiceFeignClient.getAuthToken(accesstoken);
+	
+	if(result.getData() == null) {
+		return new ResultDto(4002, "OK", "Authentication Failed");
+	}
+	
+	followService.addFollow(dto.getFolloweeId(), result.getData().getUserId());
+	
+	return new ResultDto(200, "OK", "Success");
+}

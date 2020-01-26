@@ -1,0 +1,12 @@
+server:
+  port: 8888
+spring:  #profiles:    #active: native
+  cloud:    config:      server:
+        git:
+          uri: https://github.com/bysssss/temp          search-paths:          - baseservice
+          - socialservice
+          username: leebs1986@naver.com
+          password: "!a753a6847"         #native:          #search-locations:          #- classpath:baseservice/
+          #- classpath:socialservice/
+  security:    user:      name: leebs
+      password: 12345

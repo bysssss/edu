@@ -1,0 +1,27 @@
+Code1
+@Override
+public Object run() throws ZuulException {
+	RequestContext ctx = RequestContext.getCurrentContext();
+	HttpServletRequest request = new HttpServletRequestWrapper(ctx.getRequest());
+
+	log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
+
+	String requestData = null;
+
+
+		if (request.getContentLength() > 0) {
+			try {
+				requestData = CharStreams.toString(request.getReader());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (requestData == null) {
+			return null;
+		}
+
+	log.info(String.format("%s request payload %s", request.getMethod(), requestData));
+	return null;
+}
+

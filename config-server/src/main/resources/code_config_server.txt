@@ -1,0 +1,59 @@
+2-1
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+
+
+2-2
+env=DEFAULT
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://microservice.db.iwinv.net:3306/microservice?serverTimezone=UTC
+spring.datasource.username=microservice
+spring.datasource.password=asdqwe123#
+
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQLDialect
+spring.jpa.properties.hibernate.show_sql=true
+spring.jpa.properties.hibernate.format_sql = true
+spring.jpa.properties.hibernate.id.new_generator_mappings=false
+
+
+2-3
+env=DEV
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://microservice.db.iwinv.net:3306/microservice?serverTimezone=UTC
+spring.datasource.username=microservice
+spring.datasource.password=asdqwe123#
+
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQLDialect
+spring.jpa.properties.hibernate.show_sql=true
+spring.jpa.properties.hibernate.format_sql = true
+spring.jpa.properties.hibernate.id.new_generator_mappings=false
+
+2-4
+<dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-dependencies</artifactId>
+			<version>${spring-cloud.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+	</dependencies>
+</dependencyManagement>
+
+2-5
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-config-client</artifactId>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+
+2-6
